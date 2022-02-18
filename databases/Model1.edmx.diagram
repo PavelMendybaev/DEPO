@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a3b2b9004d6049c7afc7b537916a5c72" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="DepoModel.Account" Width="1.5" PointX="8.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Defect" Width="1.5" PointX="9" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Expenses" Width="1.5" PointX="11.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.OrderTicket" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Product" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Route" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.StopsTram" Width="1.5" PointX="1.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.TimeTable" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Tram" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.TramDeffect" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.User" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepoModel.Workers" Width="1.5" PointX="3.75" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="DepoModel.FK_Account_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Defect_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Expenses_Defect" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Expenses_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Expenses_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_OrderTicket_Tram" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Route_StopsTram" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_Route_StopsTram1" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_TimeTable_Route" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_TimeTable_Tram" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_TramDeffect_Tram" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_User_Tram" ManuallyRouted="false" />
+        <AssociationConnector Association="DepoModel.FK_User_Workers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

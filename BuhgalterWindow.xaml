@@ -5,25 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:buhgalterWin"
         mc:Ignorable="d"
-        Title="BuhgalterWindow" Height="450" Width="800">
-    <Grid>
+        Title="BuhgalterWindow" Height="520" Width="800">
+    <Grid Background="#FF7BC7AB">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="250"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <DataGrid x:Name="dgDohod" >
-                
+        <StackPanel Margin="10">
+            <Label FontSize="16">Закупки</Label>
+            <DataGrid x:Name="dgProdukt" Width="370">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Width="100"/>
+                    <DataGridTextColumn Header="Цена" Width="60"/>
+                    <DataGridTextColumn Header="Название продукта" Width="130"/>
+                    <DataGridTextColumn Header="Количество" Width="75"/>
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Column="1">
-            <DataGrid x:Name="dgRashod" >
+        <StackPanel Grid.Column="1" Margin="10">
+            <Label FontSize="16">Зарплаты</Label>
+            <DataGrid x:Name="dgZp" Width="370">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Width="70"/>
+                    <DataGridTextColumn Header="Выплата" Width="60"/>
+                    <DataGridTextColumn Header="Специальность" Width="100"/>
+                    <DataGridTextColumn Header="Имя" Width="70"/>
+                    <DataGridTextColumn Header="Фамилия" Width="70"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Bottom">
+            <Label FontSize="14">Затраты на закупки</Label>
+            <TextBlock x:Name="TBProdZakup" Height="30" Width="200" Background="White"/>
+            <Label FontSize="14">Общие выплаты</Label>
+            <TextBlock x:Name="TBsalaryes" Height="30" Width="200" Background="White"/>
+            <Label FontSize="14">Доход</Label>
+            <TextBlock x:Name="TBDengi" Height="30" Width="200" Background="White"/>
+            <Button Margin="0,15,0,0" x:Name="BttnBack" Content="Выйти" FontSize="16" Height="30" Width="100" Click="BttnBack_Click"/>
+            
+        </StackPanel>
+
+        <StackPanel Margin="10" Grid.Column="1" Grid.Row="1">
+            <Label FontSize="16">Проданные билеты </Label>
+            <DataGrid x:Name="dgOrders" Width="370">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Width="100"/>
+                    <DataGridTextColumn Header="Цена" Width="70"/>
+                    <DataGridTextColumn Header="id билета" Width="90"/>
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
     </Grid>

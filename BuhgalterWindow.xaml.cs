@@ -17,9 +17,27 @@ namespace buhgalterWin
 {
     public partial class BuhgalterWindow : Window
     {
+        int prodCount = 0;
+        int salaryCount = 0;
+        int pribyl = 0;
+
+        // ЗДЕСЬ ДОЛЖЕН БЫТЬ ЭКЗЕМПЛЯР БД
+
         public BuhgalterWindow()
         {
             InitializeComponent();
+            // (ДАТАГРИДЫ)
+            //dgProdukt.ItemsSource = 
+            //dgZp.ItemsSource = 
+            //dgOrders.ItemsSource = 
+
+            
+        }
+
+        private void BttnBack_Click(object sender, RoutedEventArgs e)
+        {
+            // ВЫХОД В МЕНЮ
+            this.Close();
         }
     }
 }

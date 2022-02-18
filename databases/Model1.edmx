@@ -1,0 +1,863 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DepoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Access" Type="int" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Defect">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameProduct" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productid" Type="int" Nullable="false" />
+          <Property Name="CauseDefect" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataTime" Type="datetime" Nullable="false" />
+          <Property Name="productid" Type="int" />
+          <Property Name="userid" Type="int" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="defectid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTicket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tramid" Type="int" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductsName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeliveryTime" Type="datetime" Nullable="false" />
+          <Property Name="Info" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ShippingTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="routeStartid" Type="int" Nullable="false" />
+          <Property Name="routeEndid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StopsTram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStops" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="routenumberid" Type="int" Nullable="false" />
+          <Property Name="tramid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTram" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="routenumberid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TramDeffect">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="CauseDefect" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="tramid" Type="int" Nullable="false" />
+          <Property Name="DataTimeDeffect" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Forname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="workersid" Type="int" Nullable="false" />
+          <Property Name="DateRegistration" Type="date" Nullable="false" />
+          <Property Name="tramid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpecialityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Account_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Defect_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Defect" Type="Self.Defect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Defect">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Defect">
+          <End Role="Defect" Type="Self.Defect" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Defect">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="defectid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderTicket_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="OrderTicket" Type="Self.OrderTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderTicket">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_StopsTram">
+          <End Role="StopsTram" Type="Self.StopsTram" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopsTram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="routeStartid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_StopsTram1">
+          <End Role="StopsTram" Type="Self.StopsTram" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopsTram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="routeEndid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="routenumberid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TramDeffect_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="TramDeffect" Type="Self.TramDeffect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TramDeffect">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Workers">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="workersid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DepoModelContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Defect" EntityType="Self.Defect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTicket" EntityType="Self.OrderTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StopsTram" EntityType="Self.StopsTram" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeTable" EntityType="Self.TimeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tram" EntityType="Self.Tram" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TramDeffect" EntityType="Self.TramDeffect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Defect_Product" Association="Self.FK_Defect_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Defect" EntitySet="Defect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Defect" Association="Self.FK_Expenses_Defect">
+            <End Role="Defect" EntitySet="Defect" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Product" Association="Self.FK_Expenses_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_User" Association="Self.FK_Expenses_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderTicket_Tram" Association="Self.FK_OrderTicket_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="OrderTicket" EntitySet="OrderTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_StopsTram" Association="Self.FK_Route_StopsTram">
+            <End Role="StopsTram" EntitySet="StopsTram" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_StopsTram1" Association="Self.FK_Route_StopsTram1">
+            <End Role="StopsTram" EntitySet="StopsTram" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Route" Association="Self.FK_TimeTable_Route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Tram" Association="Self.FK_TimeTable_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TramDeffect_Tram" Association="Self.FK_TramDeffect_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="TramDeffect" EntitySet="TramDeffect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tram" Association="Self.FK_User_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Workers" Association="Self.FK_User_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DepoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Access" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Account_User" FromRole="Account" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Defect">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productid" Type="Int32" Nullable="false" />
+          <Property Name="CauseDefect" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Defect_Product" FromRole="Defect" ToRole="Product" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK_Expenses_Defect" FromRole="Defect" ToRole="Expenses" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="productid" Type="Int32" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="defectid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Defect" Relationship="Self.FK_Expenses_Defect" FromRole="Expenses" ToRole="Defect" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Expenses_Product" FromRole="Expenses" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Expenses_User" FromRole="Expenses" ToRole="User" />
+        </EntityType>
+        <EntityType Name="OrderTicket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tramid" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tram" Relationship="Self.FK_OrderTicket_Tram" FromRole="OrderTicket" ToRole="Tram" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductsName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Info" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="ShippingTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Defect" Relationship="Self.FK_Defect_Product" FromRole="Product" ToRole="Defect" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK_Expenses_Product" FromRole="Product" ToRole="Expenses" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="routeStartid" Type="Int32" Nullable="false" />
+          <Property Name="routeEndid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StopsTram" Relationship="Self.FK_Route_StopsTram" FromRole="Route" ToRole="StopsTram" />
+          <NavigationProperty Name="StopsTram1" Relationship="Self.FK_Route_StopsTram1" FromRole="Route" ToRole="StopsTram" />
+          <NavigationProperty Name="TimeTable" Relationship="Self.FK_TimeTable_Route" FromRole="Route" ToRole="TimeTable" />
+        </EntityType>
+        <EntityType Name="StopsTram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStops" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Route_StopsTram" FromRole="StopsTram" ToRole="Route" />
+          <NavigationProperty Name="Route1" Relationship="Self.FK_Route_StopsTram1" FromRole="StopsTram" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="TimeTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="routenumberid" Type="Int32" Nullable="false" />
+          <Property Name="tramid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_TimeTable_Route" FromRole="TimeTable" ToRole="Route" />
+          <NavigationProperty Name="Tram" Relationship="Self.FK_TimeTable_Tram" FromRole="TimeTable" ToRole="Tram" />
+        </EntityType>
+        <EntityType Name="Tram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTram" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="routenumberid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderTicket" Relationship="Self.FK_OrderTicket_Tram" FromRole="Tram" ToRole="OrderTicket" />
+          <NavigationProperty Name="TimeTable" Relationship="Self.FK_TimeTable_Tram" FromRole="Tram" ToRole="TimeTable" />
+          <NavigationProperty Name="TramDeffect" Relationship="Self.FK_TramDeffect_Tram" FromRole="Tram" ToRole="TramDeffect" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Tram" FromRole="Tram" ToRole="User" />
+        </EntityType>
+        <EntityType Name="TramDeffect">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="CauseDefect" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tramid" Type="Int32" Nullable="false" />
+          <Property Name="DataTimeDeffect" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tram" Relationship="Self.FK_TramDeffect_Tram" FromRole="TramDeffect" ToRole="Tram" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Forname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="workersid" Type="Int32" Nullable="false" />
+          <Property Name="DateRegistration" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="tramid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Account_User" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK_Expenses_User" FromRole="User" ToRole="Expenses" />
+          <NavigationProperty Name="Tram" Relationship="Self.FK_User_Tram" FromRole="User" ToRole="Tram" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_User_Workers" FromRole="User" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpecialityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Workers" FromRole="Workers" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Account_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Defect_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Defect" Type="Self.Defect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Defect">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Defect">
+          <End Role="Defect" Type="Self.Defect" Multiplicity="1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Defect">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="defectid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderTicket_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="OrderTicket" Type="Self.OrderTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderTicket">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_StopsTram">
+          <End Role="StopsTram" Type="Self.StopsTram" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopsTram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="routeStartid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_StopsTram1">
+          <End Role="StopsTram" Type="Self.StopsTram" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopsTram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="routeEndid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="routenumberid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeTable_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TimeTable">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TramDeffect_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="TramDeffect" Type="Self.TramDeffect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TramDeffect">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Tram">
+          <End Role="Tram" Type="Self.Tram" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="tramid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Workers">
+          <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="workersid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DepoEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Defect" EntityType="Self.Defect" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" />
+          <EntitySet Name="OrderTicket" EntityType="Self.OrderTicket" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Route" EntityType="Self.Route" />
+          <EntitySet Name="StopsTram" EntityType="Self.StopsTram" />
+          <EntitySet Name="TimeTable" EntityType="Self.TimeTable" />
+          <EntitySet Name="Tram" EntityType="Self.Tram" />
+          <EntitySet Name="TramDeffect" EntityType="Self.TramDeffect" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" />
+          <AssociationSet Name="FK_Account_User" Association="Self.FK_Account_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Defect_Product" Association="Self.FK_Defect_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Defect" EntitySet="Defect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Defect" Association="Self.FK_Expenses_Defect">
+            <End Role="Defect" EntitySet="Defect" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Product" Association="Self.FK_Expenses_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_User" Association="Self.FK_Expenses_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderTicket_Tram" Association="Self.FK_OrderTicket_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="OrderTicket" EntitySet="OrderTicket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_StopsTram" Association="Self.FK_Route_StopsTram">
+            <End Role="StopsTram" EntitySet="StopsTram" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_StopsTram1" Association="Self.FK_Route_StopsTram1">
+            <End Role="StopsTram" EntitySet="StopsTram" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Route" Association="Self.FK_TimeTable_Route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeTable_Tram" Association="Self.FK_TimeTable_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="TimeTable" EntitySet="TimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TramDeffect_Tram" Association="Self.FK_TramDeffect_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="TramDeffect" EntitySet="TramDeffect" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Tram" Association="Self.FK_User_Tram">
+            <End Role="Tram" EntitySet="Tram" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Workers" Association="Self.FK_User_Workers">
+            <End Role="Workers" EntitySet="Workers" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DepoModelContainer" CdmEntityContainer="DepoEntities1">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="DepoModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Defect">
+            <EntityTypeMapping TypeName="DepoModel.Defect">
+              <MappingFragment StoreEntitySet="Defect">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="CauseDefect" ColumnName="CauseDefect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="DepoModel.Expenses">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DataTime" ColumnName="DataTime" />
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="defectid" ColumnName="defectid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTicket">
+            <EntityTypeMapping TypeName="DepoModel.OrderTicket">
+              <MappingFragment StoreEntitySet="OrderTicket">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tramid" ColumnName="tramid" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="DepoModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ProductsName" ColumnName="ProductsName" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ShippingTime" ColumnName="ShippingTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Route">
+            <EntityTypeMapping TypeName="DepoModel.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="RouteName" ColumnName="RouteName" />
+                <ScalarProperty Name="routeStartid" ColumnName="routeStartid" />
+                <ScalarProperty Name="routeEndid" ColumnName="routeEndid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopsTram">
+            <EntityTypeMapping TypeName="DepoModel.StopsTram">
+              <MappingFragment StoreEntitySet="StopsTram">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameStops" ColumnName="NameStops" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeTable">
+            <EntityTypeMapping TypeName="DepoModel.TimeTable">
+              <MappingFragment StoreEntitySet="TimeTable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="routenumberid" ColumnName="routenumberid" />
+                <ScalarProperty Name="tramid" ColumnName="tramid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tram">
+            <EntityTypeMapping TypeName="DepoModel.Tram">
+              <MappingFragment StoreEntitySet="Tram">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameTram" ColumnName="NameTram" />
+                <ScalarProperty Name="routenumberid" ColumnName="routenumberid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TramDeffect">
+            <EntityTypeMapping TypeName="DepoModel.TramDeffect">
+              <MappingFragment StoreEntitySet="TramDeffect">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CauseDefect" ColumnName="CauseDefect" />
+                <ScalarProperty Name="tramid" ColumnName="tramid" />
+                <ScalarProperty Name="DataTimeDeffect" ColumnName="DataTimeDeffect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DepoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Forname" ColumnName="Forname" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="workersid" ColumnName="workersid" />
+                <ScalarProperty Name="DateRegistration" ColumnName="DateRegistration" />
+                <ScalarProperty Name="tramid" ColumnName="tramid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="DepoModel.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="SpecialityName" ColumnName="SpecialityName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
